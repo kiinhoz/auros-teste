@@ -2,7 +2,7 @@ const products = [
     {
         id: 1,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Descrição.",
         colors: [
             {
@@ -60,7 +60,7 @@ const products = [
     {
         id: 2,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam laborum aut explicabo molestias voluptas, eum nulla doloremque laboriosam. Accusantium omnis illum nulla architecto doloribus.",
         colors: [
             {
@@ -78,7 +78,7 @@ const products = [
     {
         id: 3,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam laborum aut explicabo molestias voluptas, eum nulla doloremque laboriosam. Accusantium omnis illum nulla architecto doloribus.",
         colors: [
             {
@@ -92,7 +92,7 @@ const products = [
     {
         id: 4,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam laborum aut explicabo molestias voluptas, eum nulla doloremque laboriosam. Accusantium omnis illum nulla architecto doloribus.",
         colors: [
             {
@@ -120,7 +120,7 @@ const products = [
     {
         id: 6,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam laborum aut explicabo molestias voluptas, eum nulla doloremque laboriosam. Accusantium omnis illum nulla architecto doloribus.",
         colors: [
             {
@@ -134,7 +134,7 @@ const products = [
     {
         id: 7,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam laborum aut explicabo molestias voluptas, eum nulla doloremque laboriosam. Accusantium omnis illum nulla architecto doloribus.",
         colors: [
             {
@@ -148,7 +148,7 @@ const products = [
     {
         id: 8,
         title: "Descrição",
-        price: "Valor",
+        price: "R$20",
         description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam laborum aut explicabo molestias voluptas, eum nulla doloremque laboriosam. Accusantium omnis illum nulla architecto doloribus.",
         colors: [
             {

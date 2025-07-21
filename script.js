@@ -1,10 +1,13 @@
 const productContainer = document.querySelector(".product-list");
 const isProductDetailPage = document.querySelector(".product-detail");
+const isCartPage = document.querySelector(".cart");
 
 if(productContainer) {
     displayProducts();
 } else if (isProductDetailPage) {
     displayProductDetail();
+} else if (isCartPage) {
+    displayCart();
 }
 
 function displayProducts() {
@@ -104,3 +107,124 @@ function displayProductDetail() {
         addToCart(productData, selectedColor, selectedSize)
     });
 }
+function addToCart(product, color, size){
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+    const existingItem = cart.find(item => item.id === product.id && item.color=== color.name && item.size === size);
+    if (existingItem){
+        existingItem.quantity += 1;
+    } else{
+        cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: color.mainImage,
+            color: color.name,
+            size: size,
+            quantity: 1
+        });
+    }
+    
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCarBadge();
+}
+function displayCart() {
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+    const cartItemsContainer = document.querySelector(".cart-items");
+    const subtotalEl = document.querySelector(".subtotal");
+    const grandTotalEl = document.querySelector(".grand-total");
+
+    cartItemsContainer.innerHTML = "";
+
+    if(cart.length === 0) {
+        cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+        subtotalEl.textContent = "$0";
+        grandTotalEl.textContent ="$0";
+        return;
+    }
+    let subtotal = 0;
+
+    cart.forEach((item, index)=> {
+        const itemTotal = parseFloat(item.price.replace("R$", "").replace(",", ".")) * item.quantity;
+        subtotal += itemTotal;
+
+        const cartItem = document.createElement("div");
+        cartItem.classList.add("cart-item");
+        cartItem.innerHTML = `
+            <div class="product">
+                <img src="${item.image}">
+                <div class="item-detail">
+                    <p>${item.title}</p>
+                    <div class="size-color-box">
+                        <span class="size">${item.size}</span>
+                        <span class="color">${item.color}</span>                            
+                    </div>
+                </div>
+            </div>
+            <span class="price">${item.price}</span>
+            <div class="quantity">
+                <input type="number" value="${item.quantity}" min="1" data-index="${index}">
+            </div>
+            <span class="total-price">${itemTotal}</span>
+            <button class="remove" data-index="${index}">
+                <i class="ri-close-line"></i>
+            </button>
+        `;
+
+        cartItemsContainer.appendChild(cartItem);
+    });
+const formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+});
+subtotalEl.textContent = formatter.format(subtotal);
+grandTotalEl.textContent = formatter.format(subtotal);
+
+removeCartItem();
+updateCartQuantity();
+
+}
+function  removeCartItem () {
+    document.querySelectorAll(".remove").forEach(button =>{
+        button.addEventListener("click", function () {
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+            const index = this.getAttribute("data-index");
+            cart.splice(index, 1);
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+            updateCarBadge();
+        });
+    });
+}
+
+function updateCartQuantity () {
+    document.querySelectorAll(".quantity input").forEach(input => {
+        input.addEventListener("change", function () {
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+            const index = this.getAttribute("data-index");
+            cart[index].quantity = parseInt(this.value);
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+            displayCart();
+            updateCarBadge();
+        });
+    });
+}
+
+function updateCarBadge() {
+    const cart= JSON.parse(sessionStorage.getItem("cart")) || [];
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+    const badge = document.querySelector(".cart-item-count");
+
+    if (badge) {
+        if(cartCount > 0) {
+            badge.textContent = cartCount;
+            badge.style.display = "block";
+        }else{
+            badge.style.display = "none";
+        }
+    }
+}
+
+updateCarBadge();
